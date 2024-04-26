@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <h2 class="text-center mt-4">All Bookings</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Sr. No</th>
+          <th scope="col">Movie Name</th>
+          <th scope="col">Show Date</th>
+          <th scope="col">Show Date</th>
+          <th scope="col">Total Seats</th>
+          <th scope="col">Total Payment</th>
+          <th scope="col">Payment Status</th>
+          <th scope="col">Paid On</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @bookings.each_with_index do |booking, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= movie_name(booking.movie) %></td>
+            <td><%= show_date(booking.show).strftime("%d %B %Y") %></td>
+            <td><%= show_start_time(booking.show).strftime("%I:%M %p") %></td>
+            <td><%= booking.seats.pluck(:seat_no).count %></td>
+            <td><%= number_to_currency(booking.total_price) %></td>
+            <td><%= booking&.payment&.paid? ? "paid" : "not paid" rescue 0 %></td>
+            <td><%= booking&.payment&.paid? ?  booking&.payment.created_at.strftime("%d %B %Y") : "-" rescue 0 %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="digg_pagination">
+    <%= will_paginate @bookings %>
+  </div>
+  </div>
+</div>
+
+

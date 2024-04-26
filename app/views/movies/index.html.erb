@@ -1,0 +1,14 @@
+<div class="container mt-2">
+  <div class="row">
+  <% @movies.each do |movie| %>
+    <%= render movie %>
+  <% end %>
+  </div>
+</div>
+<style type="text/css">
+  .card-img-top {
+ height: 200px;
+ object-fit: cover;
+}
+
+</style>

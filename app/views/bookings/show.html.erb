@@ -1,0 +1,26 @@
+ <div class="movie-details-card ">
+  <% if @booking.movie.image.attached? %>
+  <%= image_tag movie_image(@booking.movie), class: "card-img-movie-top" %>
+  <% else %>
+  <%= image_tag default_img, alt: "Photo of sunset", class: "card-img-movie-top" %>
+  <% end %>   
+  <div class="container">
+    <div class="row mt-4">
+      <h3>Booking Details</h3>
+      <div class="card mb-4">
+        <div class="card-body-main">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Movie Name: </b><%= movie_name(@booking.movie) %></li>
+            <li class="list-group-item"><b>Language: </b> <%= movie_language(@booking.movie) %></li>
+            <li class="list-group-item"><b>Price:</b> <%= booking_total(@booking) %></li>
+            <li class="list-group-item"><b>Genre:</b> <%= @booking.movie.genre %></li>
+            <li class="list-group-item"><b>Show Date:</b> <b><%= show_start_time(@booking.show).strftime("%I:%M %p")%></b> on <b> <%= show_date(@booking.show).strftime("%d %B %Y") %></li>
+              <li class="list-group-item"><b>Seats: </b><%=  @booking.seats.pluck(:seat_no).join(",")%></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>

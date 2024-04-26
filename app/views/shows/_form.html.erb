@@ -1,0 +1,51 @@
+<%= form_with(model: show, html: { class: 'show-form' }) do |form| %>
+<div class="container mt-2">
+  <div class="row justify-content-center">
+    <% if show.errors.any? %>
+    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
+      <h2><%= pluralize(show.errors.count, "error") %></h2>
+
+      <ul style="list-style-type: none; padding-left: 0;">
+        <% show.errors.each do |error| %>
+        <li style="margin-bottom: 5px;"><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+    <div class="col-md-6">
+      <h2 class="text-center mb-4"> Show For Movie</h2>
+      <div class="form-group mb-20">
+        <%= form.label :show_date, style: "d-block mb-3" %>
+        <%= form.date_field :show_date, class: 'form-control field-forms  mb-4',id: 'show_date' %>
+      </div>
+      <div class="form-group mb-20">
+        <%= form.label :start_time, style: "d-block mb-3" %>
+        <%= form.time_field :start_time, class: 'form-control field-forms  mb-4', id: 'start_time'  %>
+      </div>
+      <div class="form-group mb-20">
+        <%= form.label :end_time, style: "d-block mb-3" %>
+        <%= form.time_field :end_time, class: 'form-control field-forms  mb-4', id: 'end_time'  %>
+      </div>
+      <div class="form-group mb-20">
+        <%= form.label :price_per_ticket, style: "d-block mb-3" %>
+        <%= form.number_field :price_per_ticket, class: 'form-control field-forms  mb-4', min: 50 %>
+      </div>
+      <div class="form-group mb-20">
+        <div class="field">
+          <%= form.label :movie_id, style: "d-block mb-3" %>
+          <%= form.select :movie_id, Movie.all.collect { |c| [c.name, c.id] }, {}, { class: 'form-control field-forms  mb-4' } %>
+        </div>
+      </div>
+      <div>
+        <%= form.submit "Submit", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+   var today = new Date().toISOString().split('T')[0];
+   document.getElementById('show_date').setAttribute('min', today);
+ });
+</script>

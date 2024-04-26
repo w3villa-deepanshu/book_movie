@@ -1,0 +1,10 @@
+<div class="container mt-2">
+  <div class="row gy-4">
+    <% @bookings.each do |booking| %>
+      <%= render booking %>
+    <% end %>
+    <div class="digg_pagination">
+    <%= will_paginate @bookings %>
+  </div>
+  </div>
+</div>

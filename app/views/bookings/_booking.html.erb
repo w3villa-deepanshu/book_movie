@@ -1,0 +1,31 @@
+<div class="col-lg-3 col-md-4 col-sm-6 item movie-item mb-5">
+  <div class="card item-card-movie card-block">
+    <%= link_to booking, class: 'text-decoration-none'  do %>
+    <div class="card-img-top">
+      <% if booking.movie.image.attached? %>
+      <%= image_tag movie_image(booking.movie), class: "img-fluid" %>
+      <% else %>
+      <%= image_tag default_img, alt: "Photo of sunset", class: "img-fluid" %>
+
+      <% end %>
+    </div>
+    <div class="card-body">
+      <p class="item-card-title mt-3 mb-3 "><b>Movie:- </b><%= truncate(movie_name(booking.movie), length: 20) %></p>
+      <h5 class="item-card-title mt-3 mb-3"><b>Time:- </b><b><%= show_start_time(booking.show).strftime("%I:%M %p")%></b> on <b> <%= show_date(booking.show).strftime("%d %B %Y")  %></b></h5>
+      <p class="item-card-title mt-3 mb-3 "><b>Seats:- </b><%= booking.seats.pluck(:seat_no).count %></p>
+    </div>
+    <% end %>
+    <% if check_date(show_date(booking.show)) %>
+      <%= form_with(model: @booking, url: cancel_booking_booking_path(booking), method: :patch, local: true, class: 'mt-3 mb-3') do |f| %>
+      <div class="text-center">
+        <%= f.hidden_field :status, value: Booking.statuses[:canceled] %>
+        <%= f.submit "Cancel Booking", class: 'btn btn-danger' %>
+      </div>
+      <% end %>
+    <% else %>
+      <div class="mt-3 mb-3 text-center"><button class=" btn btn-primary text-center">View</button></div>
+    <% end %>
+  </div>
+</div>
+
+

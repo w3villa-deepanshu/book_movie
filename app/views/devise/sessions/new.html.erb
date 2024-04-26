@@ -1,0 +1,11 @@
+<div class="loginform">
+  <h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <p>Email</p>
+  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <p>Password</p>
+  <%= f.password_field :password, autocomplete: "current-password" %>
+  <%= f.submit "Log in" %>
+<% end %>
+</div>

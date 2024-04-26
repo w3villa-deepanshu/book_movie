@@ -1,0 +1,7 @@
+development: 
+  adapter: postgresql
+  encoding: unicode
+  database: book_movie
+  username: root
+  password: Deepak@8998
+  host: localhost

@@ -1,0 +1,49 @@
+<div class="main-box">
+  <h1 class="mt-2">All the Show available for <%=  movie_name(@movie) %> moive  </h1>
+  <div class="card mb-4">
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Movie Name:</b> <%= movie_name(@movie) %></li>
+        <li class="list-group-item"><b>Movie Description:</b> <%= @movie.desc %></li>
+        <li class="list-group-item"><b>Genre:</b> <%= @movie.genre %></li>
+        <li class="list-group-item"><b>Language:</b> <%= movie_language(@movie) %></li>
+      </ul>
+    </div>
+  </div>
+  <h3 class="p-3 mb-2 mt-2 bg-primary text-white text-center"> Show list of <%= movie_name(@movie) %> are below </h3> 
+  <% if @shows.empty? %>
+    <h2 class="text-center">No shows available for <%= @movie.name %>.</h2>
+  <% else %>
+    <div class="container">
+     <div class="row">
+      <% @shows.each do |show| %>
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-text h-20"><b>Movie Name:</b> <%= movie_name(show.movie) %></h5>
+            <p class="card-title"><b>Date:</b> <%= show_date(show).strftime("%d %B %Y")%></p>
+            <p class="card-text h-20"><b>Show Starts At:</b> <%= show_start_time(show).strftime("%I:%M %p") %></p>
+            <p>
+              Book Your Ticket Here ->
+              <% if available_seats(show) > 0 %>
+              <%= link_to "Book Now", new_booking_path(movie_id: @movie.id, show_id: show.id), class: 'text-decoration-none btn btn-primary' %>
+              <% else %>
+              <span class="text-decoration-none btn btn-primary disabled" aria-disabled="true">Book Now</span>
+              <% end %>
+            </p>
+          </div>
+          <div class="card-footer text-muted">
+            <% if available_seats(show) > 0 %>
+            <h3 class="text-warning"> <%= available_seats(show) %> seats left</h3>
+            <% else %>
+            <h3 class="text-warning">House Full</h3>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% end %> 
+    </div>
+  <% end %>
+</div>
+
+</div>

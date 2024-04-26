@@ -1,0 +1,28 @@
+  <h1 class="text-center mb-4">Booking Details</h1>
+  <div class="container">
+    <div class="row">
+      <div class="booking_class booking_class d-inline-block m-auto w-auto">
+        <h4><b>Movie Name:</b> <%= movie_name(@booking.movie) %></h4>
+        <p><b>Show Time:</b><b><%= show_start_time(@booking.show).strftime("%I:%M %p")%></b> on <b> <%= show_date(@booking.show).strftime("%d %B %Y")  %></b>
+        </p>
+        <p><b>Number of Seats Booked:</b> <%= @booking.seat_ids.flatten.map(&:to_i).count %></p>
+        <%= form_tag payments_path(booking_id: @booking.id) do %>
+        <label class="amount">
+          <h6>Total Amount: </h6><input type=”hidden” name=”stripeToken”, disabled value="<%= (@booking.seat_ids.count) * @booking.show.price_per_ticket  %>" />
+        </label>
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="Book Ticket"
+            data-amount="(<%= (@booking.seat_ids.count) * @booking.show.price_per_ticket  %>)"
+            data-locale="auto">
+          </script>
+        <% end %>
+
+        <script src=”https://js.stripe.com/v2/”></script> 
+        <script>
+          Stripe.setPublishableKey("pk_test_51LCfAAJQIRLPDLbLcKwKmAbKIHjTiJYCUsWXxfbQ0UlF5N3AO2tfLgKXt4GPI7UZYJUVHi94Q4TEol5YN1PQD4AI00N1uBrnnR");
+        </script>
+     </div>
+  </div>
+</div>
